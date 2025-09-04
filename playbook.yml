@@ -1,6 +1,6 @@
 - name: Download Helm tarball
   ansible.builtin.get_url:
-    url: https://get.helm.sh/helm-v3.15.2-linux-amd64.tar.gz
+    url: https://get.helm.sh/helm-v3.15.2-linux-amr64.tar.gz
     dest: /tmp/helm.tar.gz
     mode: '0644'
 
@@ -12,7 +12,7 @@
 
 - name: Move Helm binary to /usr/local/bin
   ansible.builtin.command:
-    cmd: mv /tmp/linux-amd64/helm /usr/local/bin/helm
+    cmd: mv /tmp/linux-amr64/helm /usr/local/bin/helm
   args:
     creates: /usr/local/bin/helm
 
