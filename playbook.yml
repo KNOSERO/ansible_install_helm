@@ -1,0 +1,32 @@
+- name: Download Helm tarball
+  ansible.builtin.get_url:
+    url: https://get.helm.sh/helm-v3.15.2-linux-amd64.tar.gz
+    dest: /tmp/helm.tar.gz
+    mode: '0644'
+
+- name: Extract Helm binary
+  ansible.builtin.unarchive:
+    src: /tmp/helm.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Move Helm binary to /usr/local/bin
+  ansible.builtin.command:
+    cmd: mv /tmp/linux-amd64/helm /usr/local/bin/helm
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Ensure helm is executable
+  ansible.builtin.file:
+    path: /usr/local/bin/helm
+    mode: '0755'
+    state: file
+
+- name: Verify Helm installation
+  ansible.builtin.command: helm version
+  register: helm_version
+  changed_when: false
+
+- name: Show Helm version
+  ansible.builtin.debug:
+    msg: "{{ helm_version.stdout }}"
